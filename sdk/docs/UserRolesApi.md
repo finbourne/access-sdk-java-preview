@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createUserRole**](UserRolesApi.md#createUserRole) | **POST** /api/userroles | [EXPERIMENTAL] CreateUserRole: Create a user-role
 [**deleteUserRole**](UserRolesApi.md#deleteUserRole) | **DELETE** /api/userroles/{userid} | [EXPERIMENTAL] DeleteUserRole: Delete a user-role
-[**getUserRole**](UserRolesApi.md#getUserRole) | **GET** /api/userroles/{userid} | [EXPERIMENTAL] GetUserRole: Gets a user-role
+[**getUserRole**](UserRolesApi.md#getUserRole) | **GET** /api/userroles/{userid} | [EXPERIMENTAL] GetUserRole: Get a user-role
 [**listUserRoles**](UserRolesApi.md#listUserRoles) | **GET** /api/userroles | [EXPERIMENTAL] ListUserRoles: List user-roles
 [**updateUserRole**](UserRolesApi.md#updateUserRole) | **POST** /api/userroles/{userid} | [EXPERIMENTAL] UpdateUserRole: Update a user-role
 
@@ -39,7 +39,7 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     UserRolesApi apiInstance = new UserRolesApi(defaultClient);
-    UserRoleCreationRequest userRoleCreationRequest = new UserRoleCreationRequest(); // UserRoleCreationRequest | Dto of the user-role to be created.
+    UserRoleCreationRequest userRoleCreationRequest = new UserRoleCreationRequest(); // UserRoleCreationRequest | Definition of the user-role to create.
     try {
       UserRoleResponse result = apiInstance.createUserRole(userRoleCreationRequest);
       System.out.println(result);
@@ -58,7 +58,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userRoleCreationRequest** | [**UserRoleCreationRequest**](UserRoleCreationRequest.md)| Dto of the user-role to be created. |
+ **userRoleCreationRequest** | [**UserRoleCreationRequest**](UserRoleCreationRequest.md)| Definition of the user-role to create. |
 
 ### Return type
 
@@ -108,7 +108,7 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     UserRolesApi apiInstance = new UserRolesApi(defaultClient);
-    String userid = "userid_example"; // String | Id of the user, who's user-role will be deleted.
+    String userid = "userid_example"; // String | Id of the user-role to delete.
     try {
       apiInstance.deleteUserRole(userid);
     } catch (ApiException e) {
@@ -126,7 +126,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userid** | **String**| Id of the user, who&#39;s user-role will be deleted. |
+ **userid** | **String**| Id of the user-role to delete. |
 
 ### Return type
 
@@ -152,9 +152,9 @@ null (empty response body)
 # **getUserRole**
 > UserRoleResponse getUserRole(userid)
 
-[EXPERIMENTAL] GetUserRole: Gets a user-role
+[EXPERIMENTAL] GetUserRole: Get a user-role
 
-Gets an identified user-role.
+Get an identified user-role.
 
 ### Example
 ```java
@@ -176,7 +176,7 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     UserRolesApi apiInstance = new UserRolesApi(defaultClient);
-    String userid = "userid_example"; // String | Id of the user-role to get
+    String userid = "userid_example"; // String | Id of the user-role to get.
     try {
       UserRoleResponse result = apiInstance.getUserRole(userid);
       System.out.println(result);
@@ -195,7 +195,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userid** | **String**| Id of the user-role to get |
+ **userid** | **String**| Id of the user-role to get. |
 
 ### Return type
 
@@ -316,8 +316,8 @@ public class Example {
     oauth2.setAccessToken("YOUR ACCESS TOKEN");
 
     UserRolesApi apiInstance = new UserRolesApi(defaultClient);
-    String userid = "userid_example"; // String | Id of the user-role to get
-    UserRoleUpdateRequest userRoleUpdateRequest = new UserRoleUpdateRequest(); // UserRoleUpdateRequest | Dto of the user-role to be updated.
+    String userid = "userid_example"; // String | Id of the user-role to be updated.
+    UserRoleUpdateRequest userRoleUpdateRequest = new UserRoleUpdateRequest(); // UserRoleUpdateRequest | Definition of the update to apply to the user-role.
     try {
       UserRoleResponse result = apiInstance.updateUserRole(userid, userRoleUpdateRequest);
       System.out.println(result);
@@ -336,8 +336,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userid** | **String**| Id of the user-role to get |
- **userRoleUpdateRequest** | [**UserRoleUpdateRequest**](UserRoleUpdateRequest.md)| Dto of the user-role to be updated. |
+ **userid** | **String**| Id of the user-role to be updated. |
+ **userRoleUpdateRequest** | [**UserRoleUpdateRequest**](UserRoleUpdateRequest.md)| Definition of the update to apply to the user-role. |
 
 ### Return type
 
