@@ -10,7 +10,7 @@ info:
     \ and Access Management system.\r\n\r\n"
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Access Management API
-  version: 0.0.1992
+  version: 0.0.2326
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -1255,10 +1255,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: '[EXPERIMENTAL] PagePolicies: Page Policies'
+      summary: '[EARLY ACCESS] PagePolicies: Page Policies'
       tags:
       - Policies
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: EarlyAccess
       x-accepts: application/json
   /api/policies/{code}:
     delete:
@@ -2306,10 +2306,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: '[EXPERIMENTAL] PagePolicyCollections: Page PolicyCollections'
+      summary: '[EARLY ACCESS] PagePolicyCollections: Page PolicyCollections'
       tags:
       - Policies
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: EarlyAccess
       x-accepts: application/json
   /api/policycollections/{code}:
     delete:
@@ -2792,10 +2792,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: '[EXPERIMENTAL] AddToPolicyCollection: Add To PolicyCollection'
+      summary: '[EARLY ACCESS] AddToPolicyCollection: Add To PolicyCollection'
       tags:
       - Policies
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: EarlyAccess
       x-contentType: application/json-patch+json
       x-accepts: application/json
   /api/policycollections/{code}/remove:
@@ -2949,10 +2949,10 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: '[EXPERIMENTAL] RemoveFromPolicyCollection: Remove From PolicyCollection'
+      summary: '[EARLY ACCESS] RemoveFromPolicyCollection: Remove From PolicyCollection'
       tags:
       - Policies
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: EarlyAccess
       x-contentType: application/json-patch+json
       x-accepts: application/json
   /api/roles:
@@ -3910,11 +3910,11 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: '[EXPERIMENTAL] AddPolicyCollectionToRole: Add policy collections to
+      summary: '[EARLY ACCESS] AddPolicyCollectionToRole: Add policy collections to
         a role'
       tags:
       - Roles
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: EarlyAccess
       x-contentType: application/json-patch+json
       x-accepts: application/json
   /api/roles/{scope}/{code}/policycollections/{policycollectionscope}/{policycollectioncode}:
@@ -4051,17 +4051,45 @@ paths:
           description: Error response
       security:
       - oauth2: []
-      summary: '[EXPERIMENTAL] RemovePolicyCollectionFromRole: Remove policy collection
+      summary: '[EARLY ACCESS] RemovePolicyCollectionFromRole: Remove policy collection
         from role'
       tags:
       - Roles
-      x-fbn-apistatus: Experimental
+      x-fbn-apistatus: EarlyAccess
       x-accepts: application/json
   /api/userroles:
     get:
       description: Lists all user-roles and pages.
       operationId: ListUserRoles
       parameters:
+      - description: Optional. Expression to filter the result set
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          description: Optional. Expression to filter the result set
+          maxLength: 16384
+          minLength: 0
+          nullable: true
+          pattern: ^[\s\S]*$
+          type: string
+        style: form
+      - description: Optional. Order the results by these fields. Use the '-' sign
+          to denote descending order e.g. -MyFieldName
+        explode: true
+        in: query
+        name: sortBy
+        required: false
+        schema:
+          description: Optional. Order the results by these fields. Use the '-' sign
+            to denote descending order e.g. -MyFieldName
+          maxLength: 16384
+          minLength: 1
+          nullable: true
+          pattern: ^[\s\S]*$
+          type: string
+        style: form
       - description: Optional. When paginating, limit the number of returned results
           to this many.
         explode: true
@@ -4110,7 +4138,7 @@ paths:
                   id:
                     scope: default
                     code: ExampleUserId
-                href: https://example.lusid.com/access/api/userroles?limit=limit&page=page
+                href: https://example.lusid.com/access/api/userroles?filter=filter&sortBy=sortBy&limit=limit&page=page
                 links: []
               schema:
                 $ref: '#/components/schemas/ResourceListOfUserRoleResponse'
@@ -4128,7 +4156,7 @@ paths:
                   id:
                     scope: default
                     code: ExampleUserId
-                href: https://example.lusid.com/access/api/userroles?limit=limit&page=page
+                href: https://example.lusid.com/access/api/userroles?filter=filter&sortBy=sortBy&limit=limit&page=page
                 links: []
               schema:
                 $ref: '#/components/schemas/ResourceListOfUserRoleResponse'
@@ -4146,7 +4174,7 @@ paths:
                   id:
                     scope: default
                     code: ExampleUserId
-                href: https://example.lusid.com/access/api/userroles?limit=limit&page=page
+                href: https://example.lusid.com/access/api/userroles?filter=filter&sortBy=sortBy&limit=limit&page=page
                 links: []
               schema:
                 $ref: '#/components/schemas/ResourceListOfUserRoleResponse'
@@ -4435,6 +4463,371 @@ paths:
       - User-roles
       x-fbn-apistatus: Experimental
       x-accepts: application/json
+  /api/userroles/{userid}/policies:
+    post:
+      description: Adds a policy to a user-role.
+      operationId: AddPolicyToUserRole
+      parameters:
+      - description: Id of the User Role to get
+        explode: false
+        in: path
+        name: userid
+        required: true
+        schema:
+          description: Id of the User Role to get
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              policies:
+              - scope: ExampleAddPolicyScope
+                code: ExampleAddPolicyCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyToRoleRequest'
+          application/json:
+            example:
+              policies:
+              - scope: ExampleAddPolicyScope
+                code: ExampleAddPolicyCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyToRoleRequest'
+          text/json:
+            example:
+              policies:
+              - scope: ExampleAddPolicyScope
+                code: ExampleAddPolicyCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyToRoleRequest'
+          application/*+json:
+            example:
+              policies:
+              - scope: ExampleAddPolicyScope
+                code: ExampleAddPolicyCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyToRoleRequest'
+        description: Dto of the policy to be added.
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              example:
+                resource:
+                  policyIdRoleResource:
+                    policies:
+                    - scope: ExamplePolicyId
+                      code: ExampleScope
+                    policyCollections:
+                    - scope: ExamplePolicyCollectionId
+                      code: ExampleScope
+                id:
+                  scope: default
+                  code: ExampleUserId
+              schema:
+                $ref: '#/components/schemas/UserRoleResponse'
+            application/json:
+              example:
+                resource:
+                  policyIdRoleResource:
+                    policies:
+                    - scope: ExamplePolicyId
+                      code: ExampleScope
+                    policyCollections:
+                    - scope: ExamplePolicyCollectionId
+                      code: ExampleScope
+                id:
+                  scope: default
+                  code: ExampleUserId
+              schema:
+                $ref: '#/components/schemas/UserRoleResponse'
+            text/json:
+              example:
+                resource:
+                  policyIdRoleResource:
+                    policies:
+                    - scope: ExamplePolicyId
+                      code: ExampleScope
+                    policyCollections:
+                    - scope: ExamplePolicyCollectionId
+                      code: ExampleScope
+                id:
+                  scope: default
+                  code: ExampleUserId
+              schema:
+                $ref: '#/components/schemas/UserRoleResponse'
+          description: User role with added policy collection.
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] AddPolicyToUserRole: Add a policy to a user-role'
+      tags:
+      - User-roles
+      x-fbn-apistatus: Experimental
+      x-contentType: application/json-patch+json
+      x-accepts: application/json
+  /api/userroles/{userid}/policies/{policyScope}/{policyCode}:
+    delete:
+      description: Removes a policy from a user-role.
+      operationId: RemovePolicyFromUserRole
+      parameters:
+      - description: Id of the User Role to get
+        explode: false
+        in: path
+        name: userid
+        required: true
+        schema:
+          description: Id of the User Role to get
+          type: string
+        style: simple
+      - description: The scope of the policy to remove from the User Role
+        explode: false
+        in: path
+        name: policyScope
+        required: true
+        schema:
+          description: The scope of the policy to remove from the User Role
+          type: string
+        style: simple
+      - description: The code of the policy to remove from the User Role
+        explode: false
+        in: path
+        name: policyCode
+        required: true
+        schema:
+          description: The code of the policy to remove from the User Role
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] RemovePolicyFromUserRole: Remove a policy from a user-role'
+      tags:
+      - User-roles
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+  /api/userroles/{userid}/policycollections:
+    post:
+      description: Adds a policy collection to a user-role.
+      operationId: AddPolicyCollectionToUserRole
+      parameters:
+      - description: Id of the User Role to get
+        explode: false
+        in: path
+        name: userid
+        required: true
+        schema:
+          description: Id of the User Role to get
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json-patch+json:
+            example:
+              policyCollections:
+              - scope: ExampleAddPolicyCollectionScope
+                code: ExampleAddPolicyCollectionCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyCollectionToRoleRequest'
+          application/json:
+            example:
+              policyCollections:
+              - scope: ExampleAddPolicyCollectionScope
+                code: ExampleAddPolicyCollectionCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyCollectionToRoleRequest'
+          text/json:
+            example:
+              policyCollections:
+              - scope: ExampleAddPolicyCollectionScope
+                code: ExampleAddPolicyCollectionCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyCollectionToRoleRequest'
+          application/*+json:
+            example:
+              policyCollections:
+              - scope: ExampleAddPolicyCollectionScope
+                code: ExampleAddPolicyCollectionCode
+            schema:
+              $ref: '#/components/schemas/AddPolicyCollectionToRoleRequest'
+        description: Dto of the policy collection to be added.
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              example:
+                resource:
+                  policyIdRoleResource:
+                    policies:
+                    - scope: ExamplePolicyId
+                      code: ExampleScope
+                    policyCollections:
+                    - scope: ExamplePolicyCollectionId
+                      code: ExampleScope
+                id:
+                  scope: default
+                  code: ExampleUserId
+              schema:
+                $ref: '#/components/schemas/UserRoleResponse'
+            application/json:
+              example:
+                resource:
+                  policyIdRoleResource:
+                    policies:
+                    - scope: ExamplePolicyId
+                      code: ExampleScope
+                    policyCollections:
+                    - scope: ExamplePolicyCollectionId
+                      code: ExampleScope
+                id:
+                  scope: default
+                  code: ExampleUserId
+              schema:
+                $ref: '#/components/schemas/UserRoleResponse'
+            text/json:
+              example:
+                resource:
+                  policyIdRoleResource:
+                    policies:
+                    - scope: ExamplePolicyId
+                      code: ExampleScope
+                    policyCollections:
+                    - scope: ExamplePolicyCollectionId
+                      code: ExampleScope
+                id:
+                  scope: default
+                  code: ExampleUserId
+              schema:
+                $ref: '#/components/schemas/UserRoleResponse'
+          description: User role with added policy collection.
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] AddPolicyCollectionToUserRole: Add a policy collection
+        to a user-role'
+      tags:
+      - User-roles
+      x-fbn-apistatus: Experimental
+      x-contentType: application/json-patch+json
+      x-accepts: application/json
+  /api/userroles/{userid}/policycollections/{policyCollectionScope}/{policyCollectionCode}:
+    delete:
+      description: Removes a policy collection from a user-role.
+      operationId: RemovePolicyCollectionFromUserRole
+      parameters:
+      - description: Id of the User Role to get
+        explode: false
+        in: path
+        name: userid
+        required: true
+        schema:
+          description: Id of the User Role to get
+          type: string
+        style: simple
+      - description: The scope of policy collection to remove from the User Role
+        explode: false
+        in: path
+        name: policyCollectionScope
+        required: true
+        schema:
+          description: The scope of policy collection to remove from the User Role
+          type: string
+        style: simple
+      - description: The code of the policy collection to remove from the User Role
+        explode: false
+        in: path
+        name: policyCollectionCode
+        required: true
+        schema:
+          description: The code of the policy collection to remove from the User Role
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Success
+        "400":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/LusidValidationProblemDetails'
+          description: The details of the input related failure
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LusidProblemDetails'
+          description: Error response
+      security:
+      - oauth2: []
+      summary: '[EXPERIMENTAL] RemovePolicyCollectionFromUserRole: Remove a policy
+        collection from a user-role'
+      tags:
+      - User-roles
+      x-fbn-apistatus: Experimental
+      x-accepts: application/json
+  /api/userroles/{userid}/update:
     post:
       description: Updates an identified user-role.
       operationId: UpdateUserRole
@@ -4819,6 +5212,24 @@ components:
           type: array
       required:
       - policyCollections
+      type: object
+    AddPolicyToRoleRequest:
+      additionalProperties: false
+      description: Request body used to add Policies to a Role
+      example:
+        policies:
+        - code: code
+          scope: scope
+        - code: code
+          scope: scope
+      properties:
+        policies:
+          description: Identifiers of policies to add to a role
+          items:
+            $ref: '#/components/schemas/PolicyId'
+          type: array
+      required:
+      - policies
       type: object
     AddToPolicyCollectionRequest:
       additionalProperties: false

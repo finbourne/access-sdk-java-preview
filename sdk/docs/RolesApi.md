@@ -4,12 +4,12 @@ All URIs are relative to *https://www.lusid.com/access*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addPolicyCollectionToRole**](RolesApi.md#addPolicyCollectionToRole) | **POST** /api/roles/{scope}/{code}/policycollections | [EXPERIMENTAL] AddPolicyCollectionToRole: Add policy collections to a role
+[**addPolicyCollectionToRole**](RolesApi.md#addPolicyCollectionToRole) | **POST** /api/roles/{scope}/{code}/policycollections | [EARLY ACCESS] AddPolicyCollectionToRole: Add policy collections to a role
 [**createRole**](RolesApi.md#createRole) | **POST** /api/roles | [EARLY ACCESS] CreateRole: Create Role
 [**deleteRole**](RolesApi.md#deleteRole) | **DELETE** /api/roles/{code} | [EARLY ACCESS] DeleteRole: Delete Role
 [**getRole**](RolesApi.md#getRole) | **GET** /api/roles/{code} | [EARLY ACCESS] GetRole: Get Role
 [**listRoles**](RolesApi.md#listRoles) | **GET** /api/roles | [EARLY ACCESS] ListRoles: List Roles
-[**removePolicyCollectionFromRole**](RolesApi.md#removePolicyCollectionFromRole) | **DELETE** /api/roles/{scope}/{code}/policycollections/{policycollectionscope}/{policycollectioncode} | [EXPERIMENTAL] RemovePolicyCollectionFromRole: Remove policy collection from role
+[**removePolicyCollectionFromRole**](RolesApi.md#removePolicyCollectionFromRole) | **DELETE** /api/roles/{scope}/{code}/policycollections/{policycollectionscope}/{policycollectioncode} | [EARLY ACCESS] RemovePolicyCollectionFromRole: Remove policy collection from role
 [**updateRole**](RolesApi.md#updateRole) | **PUT** /api/roles/{code} | [EARLY ACCESS] UpdateRole: Update Role
 
 
@@ -17,7 +17,7 @@ Method | HTTP request | Description
 # **addPolicyCollectionToRole**
 > RoleResponse addPolicyCollectionToRole(scope, code, addPolicyCollectionToRoleRequest)
 
-[EXPERIMENTAL] AddPolicyCollectionToRole: Add policy collections to a role
+[EARLY ACCESS] AddPolicyCollectionToRole: Add policy collections to a role
 
 Assigns policy collections to a role
 
@@ -381,7 +381,7 @@ Name | Type | Description  | Notes
 # **removePolicyCollectionFromRole**
 > RoleResponse removePolicyCollectionFromRole(scope, code, policycollectionscope, policycollectioncode)
 
-[EXPERIMENTAL] RemovePolicyCollectionFromRole: Remove policy collection from role
+[EARLY ACCESS] RemovePolicyCollectionFromRole: Remove policy collection from role
 
 Removes a policy collection from a role
 

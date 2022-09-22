@@ -15,7 +15,7 @@ package com.finbourne.access.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.finbourne.access.model.PolicyCollectionId;
+import com.finbourne.access.model.PolicyId;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -28,38 +28,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Request body used to add Policy Collections to a Role
+ * Request body used to add Policies to a Role
  */
-@ApiModel(description = "Request body used to add Policy Collections to a Role")
+@ApiModel(description = "Request body used to add Policies to a Role")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AddPolicyCollectionToRoleRequest {
-  public static final String SERIALIZED_NAME_POLICY_COLLECTIONS = "policyCollections";
-  @SerializedName(SERIALIZED_NAME_POLICY_COLLECTIONS)
-  private List<PolicyCollectionId> policyCollections = new ArrayList<>();
+public class AddPolicyToRoleRequest {
+  public static final String SERIALIZED_NAME_POLICIES = "policies";
+  @SerializedName(SERIALIZED_NAME_POLICIES)
+  private List<PolicyId> policies = new ArrayList<>();
 
 
-  public AddPolicyCollectionToRoleRequest policyCollections(List<PolicyCollectionId> policyCollections) {
-    this.policyCollections = policyCollections; 
+  public AddPolicyToRoleRequest policies(List<PolicyId> policies) {
+    this.policies = policies; 
     return this;
   }
 
-  public AddPolicyCollectionToRoleRequest addPolicyCollectionsItem(PolicyCollectionId policyCollectionsItem) {
+  public AddPolicyToRoleRequest addPoliciesItem(PolicyId policiesItem) {
    
-    this.policyCollections.add(policyCollectionsItem);
+    this.policies.add(policiesItem);
     return this;
   }
 
    /**
-   * Identifiers of policy collections to add to a role
-   * @return policyCollections
+   * Identifiers of policies to add to a role
+   * @return policies
   **/
-  @ApiModelProperty(required = true, value = "Identifiers of policy collections to add to a role")
-  public List<PolicyCollectionId> getPolicyCollections() {
-    return policyCollections;
+  @ApiModelProperty(required = true, value = "Identifiers of policies to add to a role")
+  public List<PolicyId> getPolicies() {
+    return policies;
   }
 
-  public void setPolicyCollections(List<PolicyCollectionId> policyCollections) {
-    this.policyCollections = policyCollections;
+  public void setPolicies(List<PolicyId> policies) {
+    this.policies = policies;
   }
 
 
@@ -82,8 +82,8 @@ public class AddPolicyCollectionToRoleRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AddPolicyCollectionToRoleRequest {\n");
-    sb.append("    policyCollections: ").append(toIndentedString(policyCollections)).append("\n");
+    sb.append("class AddPolicyToRoleRequest {\n");
+    sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
     sb.append("}");
     return sb.toString();
   }

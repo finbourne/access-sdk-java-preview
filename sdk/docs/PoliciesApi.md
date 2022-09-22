@@ -4,7 +4,7 @@ All URIs are relative to *https://www.lusid.com/access*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addToPolicyCollection**](PoliciesApi.md#addToPolicyCollection) | **POST** /api/policycollections/{code}/add | [EXPERIMENTAL] AddToPolicyCollection: Add To PolicyCollection
+[**addToPolicyCollection**](PoliciesApi.md#addToPolicyCollection) | **POST** /api/policycollections/{code}/add | [EARLY ACCESS] AddToPolicyCollection: Add To PolicyCollection
 [**createPolicy**](PoliciesApi.md#createPolicy) | **POST** /api/policies | [EARLY ACCESS] CreatePolicy: Create Policy
 [**createPolicyCollection**](PoliciesApi.md#createPolicyCollection) | **POST** /api/policycollections | [EARLY ACCESS] CreatePolicyCollection: Create PolicyCollection
 [**deletePolicy**](PoliciesApi.md#deletePolicy) | **DELETE** /api/policies/{code} | [EARLY ACCESS] DeletePolicy: Delete Policy
@@ -15,9 +15,9 @@ Method | HTTP request | Description
 [**getPolicyCollection**](PoliciesApi.md#getPolicyCollection) | **GET** /api/policycollections/{code} | [EARLY ACCESS] GetPolicyCollection: Get PolicyCollection
 [**listPolicies**](PoliciesApi.md#listPolicies) | **GET** /api/policies | [EARLY ACCESS] ListPolicies: List Policies
 [**listPolicyCollections**](PoliciesApi.md#listPolicyCollections) | **GET** /api/policycollections | [EARLY ACCESS] ListPolicyCollections: List PolicyCollections
-[**pagePolicies**](PoliciesApi.md#pagePolicies) | **GET** /api/policies/page | [EXPERIMENTAL] PagePolicies: Page Policies
-[**pagePolicyCollections**](PoliciesApi.md#pagePolicyCollections) | **GET** /api/policycollections/page | [EXPERIMENTAL] PagePolicyCollections: Page PolicyCollections
-[**removeFromPolicyCollection**](PoliciesApi.md#removeFromPolicyCollection) | **POST** /api/policycollections/{code}/remove | [EXPERIMENTAL] RemoveFromPolicyCollection: Remove From PolicyCollection
+[**pagePolicies**](PoliciesApi.md#pagePolicies) | **GET** /api/policies/page | [EARLY ACCESS] PagePolicies: Page Policies
+[**pagePolicyCollections**](PoliciesApi.md#pagePolicyCollections) | **GET** /api/policycollections/page | [EARLY ACCESS] PagePolicyCollections: Page PolicyCollections
+[**removeFromPolicyCollection**](PoliciesApi.md#removeFromPolicyCollection) | **POST** /api/policycollections/{code}/remove | [EARLY ACCESS] RemoveFromPolicyCollection: Remove From PolicyCollection
 [**updatePolicy**](PoliciesApi.md#updatePolicy) | **PUT** /api/policies/{code} | [EARLY ACCESS] UpdatePolicy: Update Policy
 [**updatePolicyCollection**](PoliciesApi.md#updatePolicyCollection) | **PUT** /api/policycollections/{code} | [EARLY ACCESS] UpdatePolicyCollection: Update PolicyCollection
 
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 # **addToPolicyCollection**
 > PolicyCollectionResponse addToPolicyCollection(code, addToPolicyCollectionRequest, scope)
 
-[EXPERIMENTAL] AddToPolicyCollection: Add To PolicyCollection
+[EARLY ACCESS] AddToPolicyCollection: Add To PolicyCollection
 
 Add Policies and/or PolicyCollections to a PolicyCollection
 
@@ -833,7 +833,7 @@ Name | Type | Description  | Notes
 # **pagePolicies**
 > ResourceListOfPolicyResponse pagePolicies(asAt, sortBy, limit, filter, page)
 
-[EXPERIMENTAL] PagePolicies: Page Policies
+[EARLY ACCESS] PagePolicies: Page Policies
 
 Gets all PolicyCollections in a scope in pages. Under development.
 
@@ -910,7 +910,7 @@ Name | Type | Description  | Notes
 # **pagePolicyCollections**
 > ResourceListOfPolicyCollectionResponse pagePolicyCollections(asAt, sortBy, limit, filter, page)
 
-[EXPERIMENTAL] PagePolicyCollections: Page PolicyCollections
+[EARLY ACCESS] PagePolicyCollections: Page PolicyCollections
 
 Gets all PolicyCollections in a scope in pages. Under development.
 
@@ -987,7 +987,7 @@ Name | Type | Description  | Notes
 # **removeFromPolicyCollection**
 > PolicyCollectionResponse removeFromPolicyCollection(code, removeFromPolicyCollectionRequest, scope)
 
-[EXPERIMENTAL] RemoveFromPolicyCollection: Remove From PolicyCollection
+[EARLY ACCESS] RemoveFromPolicyCollection: Remove From PolicyCollection
 
 Remove Policies and/or PolicyCollections from a PolicyCollection
 
