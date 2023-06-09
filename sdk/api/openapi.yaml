@@ -10,7 +10,7 @@ info:
     \ and Access Management system.\r\n\r\n"
   termsOfService: https://www.finbourne.com/legal/terms-conditions
   title: FINBOURNE Access Management API
-  version: 0.0.2326
+  version: 0.0.3031
   x-logo:
     url: https://www.lusid.com/app/assets/logo_white.png
     backgroundColor: '#415464'
@@ -40,11 +40,8 @@ paths:
         name: applications
         required: false
         schema:
-          description: Optional. Filter on the applications that the policies apply
-            to
           items:
             type: string
-          nullable: true
           type: array
         style: form
         x-nullable: true
@@ -54,9 +51,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -67,11 +62,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use use the '-'
-            sign to denote descending order e.g. -MyFieldName
           items:
             type: string
-          nullable: true
           type: array
         style: form
         x-nullable: true
@@ -81,9 +73,7 @@ paths:
         name: start
         required: false
         schema:
-          description: Optional. When paginating, skip this number of results
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -94,10 +84,7 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. When paginating, limit the number of returned results
-            to this many.
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -107,8 +94,9 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
-          nullable: true
+          maxLength: 16384
+          minLength: 0
+          pattern: ^[\s\S]*$
           type: string
         style: form
       responses:
@@ -300,11 +288,8 @@ paths:
         name: applications
         required: false
         schema:
-          description: Optional. The application type of the roles and policies to
-            use when evaluating.
           items:
             type: string
-          nullable: true
           type: array
         style: form
         x-nullable: true
@@ -314,9 +299,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The requested AsAt date of the entitlements
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -324,7 +307,7 @@ paths:
         content:
           application/json-patch+json:
             example:
-              data-access-page-evalation:
+              data-access-page-evaluation:
                 request:
                   action:
                     entityCode: WebSitePage
@@ -337,18 +320,16 @@ paths:
                     scope: FINBOURNE
                     code: DataAccessPage
                   metadata:
-                    requiredLicence:
+                    RequiredLicence:
                     - provider: WebsiteAccess
                       value: FINBOURNE
             schema:
               additionalProperties:
                 $ref: '#/components/schemas/EvaluationRequest'
-              description: A dictionary of evaluations, keyed using any arbitrary
-                correlation id (it will be returned with the response for that evaluation).
               type: object
           application/json:
             example:
-              data-access-page-evalation:
+              data-access-page-evaluation:
                 request:
                   action:
                     entityCode: WebSitePage
@@ -361,18 +342,16 @@ paths:
                     scope: FINBOURNE
                     code: DataAccessPage
                   metadata:
-                    requiredLicence:
+                    RequiredLicence:
                     - provider: WebsiteAccess
                       value: FINBOURNE
             schema:
               additionalProperties:
                 $ref: '#/components/schemas/EvaluationRequest'
-              description: A dictionary of evaluations, keyed using any arbitrary
-                correlation id (it will be returned with the response for that evaluation).
               type: object
           text/json:
             example:
-              data-access-page-evalation:
+              data-access-page-evaluation:
                 request:
                   action:
                     entityCode: WebSitePage
@@ -385,18 +364,16 @@ paths:
                     scope: FINBOURNE
                     code: DataAccessPage
                   metadata:
-                    requiredLicence:
+                    RequiredLicence:
                     - provider: WebsiteAccess
                       value: FINBOURNE
             schema:
               additionalProperties:
                 $ref: '#/components/schemas/EvaluationRequest'
-              description: A dictionary of evaluations, keyed using any arbitrary
-                correlation id (it will be returned with the response for that evaluation).
               type: object
           application/*+json:
             example:
-              data-access-page-evalation:
+              data-access-page-evaluation:
                 request:
                   action:
                     entityCode: WebSitePage
@@ -409,14 +386,12 @@ paths:
                     scope: FINBOURNE
                     code: DataAccessPage
                   metadata:
-                    requiredLicence:
+                    RequiredLicence:
                     - provider: WebsiteAccess
                       value: FINBOURNE
             schema:
               additionalProperties:
                 $ref: '#/components/schemas/EvaluationRequest'
-              description: A dictionary of evaluations, keyed using any arbitrary
-                correlation id (it will be returned with the response for that evaluation).
               type: object
         description: A dictionary of evaluations, keyed using any arbitrary correlation
           id (it will be returned with the response for that evaluation).
@@ -515,7 +490,7 @@ paths:
       x-accepts: application/json
   /api/policies:
     get:
-      description: Gets all Policies in a scope
+      description: Gets all Policies in a scope. For pagination support, use PagePolicies.
       operationId: ListPolicies
       parameters:
       - description: Optional. Will use the default scope if not provided. The requested
@@ -525,9 +500,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The requested
-            scope
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The AsAt date time of the data
@@ -536,9 +509,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -549,11 +520,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use use the '-'
-            sign to denote descending order e.g. -MyFieldName
           items:
             type: string
-          nullable: true
           type: array
         style: form
         x-nullable: true
@@ -563,9 +531,7 @@ paths:
         name: start
         required: false
         schema:
-          description: Optional. When paginating, skip this number of results
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -576,10 +542,7 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. When paginating, limit the number of returned results
-            to this many.
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -589,8 +552,9 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
-          nullable: true
+          maxLength: 16384
+          minLength: 0
+          pattern: ^[\s\S]*$
           type: string
         style: form
       responses:
@@ -1024,7 +988,7 @@ paths:
       x-accepts: application/json
   /api/policies/page:
     get:
-      description: Gets all PolicyCollections in a scope in pages. Under development.
+      description: Gets all Policies with pagination support.
       operationId: PagePolicies
       parameters:
       - description: Optional. Not currently used. The AsAt date time of the data
@@ -1033,9 +997,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. Not currently used. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -1046,11 +1008,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use the '-' sign
-            to denote descending order e.g. -MyFieldName
           maxLength: 16384
           minLength: 1
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -1061,12 +1020,9 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. 2000 if not provided. When paginating, limit the
-            number of returned results to this many
           format: int32
           maximum: 5000
           minimum: 1
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -1076,10 +1032,8 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
           maxLength: 16384
           minLength: 0
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -1089,10 +1043,8 @@ paths:
         name: page
         required: false
         schema:
-          description: Optional. Paging token returned from a previous result
           maxLength: 500
           minLength: 1
-          nullable: true
           pattern: ^[a-zA-Z0-9\+/]*={0,3}$
           type: string
         style: form
@@ -1271,7 +1223,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Policy
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. Will use the default scope if not provided. The scope
@@ -1281,14 +1233,12 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the Policy
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             text/plain:
@@ -1324,7 +1274,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Policy
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. The AsAt date time of the data
@@ -1333,9 +1283,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -1346,9 +1294,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the Policy
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       responses:
@@ -1516,7 +1462,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Policy
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. Will use the default scope if not provided. The scope
@@ -1526,9 +1472,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the Policy
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       requestBody:
@@ -1845,7 +1789,8 @@ paths:
       x-accepts: application/json
   /api/policycollections:
     get:
-      description: Gets all PolicyCollections in a scope
+      description: Gets all PolicyCollections in a scope. For pagination support,
+        use PagePolicyCollections
       operationId: ListPolicyCollections
       parameters:
       - description: Optional. Will use the default scope if not provided. The requested
@@ -1855,9 +1800,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The requested
-            scope
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The AsAt date time of the data
@@ -1866,9 +1809,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -1879,11 +1820,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use use the '-'
-            sign to denote descending order e.g. -MyFieldName
           items:
             type: string
-          nullable: true
           type: array
         style: form
         x-nullable: true
@@ -1893,9 +1831,7 @@ paths:
         name: start
         required: false
         schema:
-          description: Optional. When paginating, skip this number of results
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -1906,10 +1842,7 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. 2000 if not provided. When paginating, limit the
-            number of returned results to this many.
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -1919,8 +1852,9 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
-          nullable: true
+          maxLength: 16384
+          minLength: 0
+          pattern: ^[\s\S]*$
           type: string
         style: form
       responses:
@@ -2153,7 +2087,7 @@ paths:
       x-accepts: application/json
   /api/policycollections/page:
     get:
-      description: Gets all PolicyCollections in a scope in pages. Under development.
+      description: Gets all PolicyCollections with pagination support.
       operationId: PagePolicyCollections
       parameters:
       - description: Optional. Not currently used. The AsAt date time of the data
@@ -2162,9 +2096,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. Not currently used. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -2175,11 +2107,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use the '-' sign
-            to denote descending order e.g. -MyFieldName
           maxLength: 16384
           minLength: 1
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -2190,12 +2119,9 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. 2000 if not provided. When paginating, limit the
-            number of returned results to this many
           format: int32
           maximum: 5000
           minimum: 1
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -2205,10 +2131,8 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
           maxLength: 16384
           minLength: 0
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -2218,10 +2142,8 @@ paths:
         name: page
         required: false
         schema:
-          description: Optional. Paging token returned from a previous result
           maxLength: 500
           minLength: 1
-          nullable: true
           pattern: ^[a-zA-Z0-9\+/]*={0,3}$
           type: string
         style: form
@@ -2322,7 +2244,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the PolicyCollection
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. Will use the default scope if not provided. The scope
@@ -2332,14 +2254,12 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the PolicyCollection
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             text/plain:
@@ -2375,7 +2295,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the PolicyCollection
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. The AsAt date time of the data
@@ -2384,9 +2304,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -2397,9 +2315,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the PolicyCollection
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       responses:
@@ -2489,7 +2405,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the PolicyCollection
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. Will use the default scope if not provided. The scope
@@ -2499,9 +2415,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the PolicyCollection
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       requestBody:
@@ -2653,7 +2567,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the PolicyCollection
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. Will use the default scope if not provided. The scope
@@ -2663,9 +2577,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the PolicyCollection
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       requestBody:
@@ -2809,7 +2721,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the PolicyCollection
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. Will use the default scope if not provided. The scope
@@ -2819,9 +2731,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use the default scope if not provided. The scope
-            of the PolicyCollection
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       requestBody:
@@ -2967,9 +2877,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use all scopes if not supplied. The requested
-            scope
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The AsAt date time of the data
@@ -2978,9 +2886,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -2991,11 +2897,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use use the '-'
-            sign to denote descending order e.g. -MyFieldName
           items:
             type: string
-          nullable: true
           type: array
         style: form
         x-nullable: true
@@ -3005,9 +2908,7 @@ paths:
         name: start
         required: false
         schema:
-          description: Optional. When paginating, skip this number of results
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -3018,10 +2919,7 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. When paginating, limit the number of returned results
-            to this many.
           format: int32
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -3031,8 +2929,9 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
-          nullable: true
+          maxLength: 16384
+          minLength: 0
+          pattern: ^[\s\S]*$
           type: string
         style: form
       responses:
@@ -3332,7 +3231,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: '>Optional. Will use default scope if not supplied. The scope
@@ -3342,14 +3241,12 @@ paths:
         name: scope
         required: false
         schema:
-          description: '>Optional. Will use default scope if not supplied. The scope
-            of the Role'
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             text/plain:
@@ -3385,7 +3282,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: Optional. The AsAt date time of the data
@@ -3394,9 +3291,7 @@ paths:
         name: asAt
         required: false
         schema:
-          description: Optional. The AsAt date time of the data
           format: date-time
-          nullable: true
           type: string
         style: form
         x-nullable: true
@@ -3407,9 +3302,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: Optional. Will use default scope if not supplied. The scope
-            of the Role
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       responses:
@@ -3520,7 +3413,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: '>Optional. Will use default scope if not supplied. The scope
@@ -3530,9 +3423,7 @@ paths:
         name: scope
         required: false
         schema:
-          description: '>Optional. Will use default scope if not supplied. The scope
-            of the Role'
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The scope of the Role. Will use default scope if not
@@ -3542,9 +3433,7 @@ paths:
         name: beforeScope
         required: false
         schema:
-          description: Optional. The scope of the Role. Will use default scope if
-            not supplied.
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The code of the Role
@@ -3553,8 +3442,7 @@ paths:
         name: beforeCode
         required: false
         schema:
-          description: Optional. The code of the Role
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The scope of the Role. Will use default scope if not
@@ -3564,9 +3452,7 @@ paths:
         name: afterScope
         required: false
         schema:
-          description: Optional. The scope of the Role. Will use default scope if
-            not supplied.
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       - description: Optional. The code of the Role
@@ -3575,8 +3461,7 @@ paths:
         name: afterCode
         required: false
         schema:
-          description: Optional. The code of the Role
-          nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: form
       requestBody:
@@ -3765,7 +3650,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: The code of the Role
@@ -3774,7 +3659,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       requestBody:
@@ -3928,7 +3813,7 @@ paths:
         name: scope
         required: true
         schema:
-          description: The scope of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: The code of the Role
@@ -3937,7 +3822,7 @@ paths:
         name: code
         required: true
         schema:
-          description: The code of the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: The scope of policy collection to remove from the Role
@@ -3946,7 +3831,7 @@ paths:
         name: policycollectionscope
         required: true
         schema:
-          description: The scope of policy collection to remove from the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: The code of the policy collection to remove from the Role
@@ -3955,7 +3840,7 @@ paths:
         name: policycollectioncode
         required: true
         schema:
-          description: The code of the policy collection to remove from the Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       responses:
@@ -4068,10 +3953,8 @@ paths:
         name: filter
         required: false
         schema:
-          description: Optional. Expression to filter the result set
           maxLength: 16384
           minLength: 0
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -4082,11 +3965,8 @@ paths:
         name: sortBy
         required: false
         schema:
-          description: Optional. Order the results by these fields. Use the '-' sign
-            to denote descending order e.g. -MyFieldName
           maxLength: 16384
           minLength: 1
-          nullable: true
           pattern: ^[\s\S]*$
           type: string
         style: form
@@ -4097,12 +3977,9 @@ paths:
         name: limit
         required: false
         schema:
-          description: Optional. When paginating, limit the number of returned results
-            to this many.
           format: int32
           maximum: 5000
           minimum: 1
-          nullable: true
           type: integer
         style: form
         x-nullable: true
@@ -4113,11 +3990,8 @@ paths:
         name: page
         required: false
         schema:
-          description: "Optional. Encoded page string returned from a previous search\
-            \ result that will retrieve\r\n            the next page of data."
           maxLength: 500
           minLength: 1
-          nullable: true
           pattern: ^[a-zA-Z0-9\+/]*={0,3}$
           type: string
         style: form
@@ -4345,12 +4219,11 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the user-role to delete.
           type: string
         style: simple
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             text/plain:
@@ -4386,7 +4259,6 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the user-role to get.
           type: string
         style: simple
       responses:
@@ -4474,7 +4346,6 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the User Role to get
           type: string
         style: simple
       requestBody:
@@ -4595,7 +4466,6 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the User Role to get
           type: string
         style: simple
       - description: The scope of the policy to remove from the User Role
@@ -4604,7 +4474,7 @@ paths:
         name: policyScope
         required: true
         schema:
-          description: The scope of the policy to remove from the User Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: The code of the policy to remove from the User Role
@@ -4613,12 +4483,12 @@ paths:
         name: policyCode
         required: true
         schema:
-          description: The code of the policy to remove from the User Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             text/plain:
@@ -4655,7 +4525,6 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the User Role to get
           type: string
         style: simple
       requestBody:
@@ -4777,7 +4646,6 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the User Role to get
           type: string
         style: simple
       - description: The scope of policy collection to remove from the User Role
@@ -4786,7 +4654,7 @@ paths:
         name: policyCollectionScope
         required: true
         schema:
-          description: The scope of policy collection to remove from the User Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       - description: The code of the policy collection to remove from the User Role
@@ -4795,12 +4663,12 @@ paths:
         name: policyCollectionCode
         required: true
         schema:
-          description: The code of the policy collection to remove from the User Role
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         style: simple
       responses:
         "204":
-          description: Success
+          description: No Content
         "400":
           content:
             text/plain:
@@ -4838,7 +4706,6 @@ paths:
         name: userid
         required: true
         schema:
-          description: Id of the user-role to be updated.
           type: string
         style: simple
       requestBody:
@@ -5008,6 +4875,7 @@ components:
           relation: relation
       properties:
         description:
+          minLength: 1
           type: string
         action:
           $ref: '#/components/schemas/ActionId'
@@ -5152,6 +5020,7 @@ components:
           nullable: true
           type: string
         description:
+          minLength: 1
           type: string
         actions:
           items:
@@ -5461,7 +5330,113 @@ components:
               scope: scope
               entity: entity
         if:
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -5472,7 +5447,113 @@ components:
             claimOriginalIssuer: claimOriginalIssuer
             claimIssuer: claimIssuer
             value: value
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -5734,10 +5815,13 @@ components:
           format: int32
           type: integer
         name:
+          minLength: 1
           type: string
         displayName:
+          minLength: 1
           type: string
         description:
+          minLength: 1
           type: string
         required:
           type: boolean
@@ -5776,7 +5860,7 @@ components:
         actions:
           items:
             $ref: '#/components/schemas/ActionId'
-          minLength: 1
+          minItems: 1
           type: array
         name:
           maxLength: 100
@@ -5795,6 +5879,112 @@ components:
     IfExpression:
       additionalProperties: false
       example:
+        ifFeatureChainExpression:
+          selectors:
+          - metadataSelectorDefinition:
+              name: name
+              description: description
+              expressions:
+              - metadataKey: metadataKey
+                textValue: textValue
+              - metadataKey: metadataKey
+                textValue: textValue
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+            idSelectorDefinition:
+              identifier:
+                key: identifier
+              name: name
+              description: description
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+            policySelectorDefinition:
+              identityRestriction:
+                key: identityRestriction
+              name: name
+              description: description
+              restrictionSelectors:
+              - null
+              - null
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+            matchAllSelectorDefinition:
+              name: name
+              description: description
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+          - metadataSelectorDefinition:
+              name: name
+              description: description
+              expressions:
+              - metadataKey: metadataKey
+                textValue: textValue
+              - metadataKey: metadataKey
+                textValue: textValue
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+            idSelectorDefinition:
+              identifier:
+                key: identifier
+              name: name
+              description: description
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+            policySelectorDefinition:
+              identityRestriction:
+                key: identityRestriction
+              name: name
+              description: description
+              restrictionSelectors:
+              - null
+              - null
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
+            matchAllSelectorDefinition:
+              name: name
+              description: description
+              actions:
+              - activity: activity
+                scope: scope
+                entity: entity
+              - activity: activity
+                scope: scope
+                entity: entity
         ifIdentityScopeExpression:
           scopeName: scopeName
         ifRequestHeaderExpression:
@@ -5813,6 +6003,124 @@ components:
           $ref: '#/components/schemas/IfIdentityClaimExpression'
         ifIdentityScopeExpression:
           $ref: '#/components/schemas/IfIdentityScopeExpression'
+        ifFeatureChainExpression:
+          $ref: '#/components/schemas/IfFeatureChainExpression'
+      type: object
+    IfFeatureChainExpression:
+      additionalProperties: false
+      example:
+        selectors:
+        - metadataSelectorDefinition:
+            name: name
+            description: description
+            expressions:
+            - metadataKey: metadataKey
+              textValue: textValue
+            - metadataKey: metadataKey
+              textValue: textValue
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+          idSelectorDefinition:
+            identifier:
+              key: identifier
+            name: name
+            description: description
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+          policySelectorDefinition:
+            identityRestriction:
+              key: identityRestriction
+            name: name
+            description: description
+            restrictionSelectors:
+            - null
+            - null
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+          matchAllSelectorDefinition:
+            name: name
+            description: description
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+        - metadataSelectorDefinition:
+            name: name
+            description: description
+            expressions:
+            - metadataKey: metadataKey
+              textValue: textValue
+            - metadataKey: metadataKey
+              textValue: textValue
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+          idSelectorDefinition:
+            identifier:
+              key: identifier
+            name: name
+            description: description
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+          policySelectorDefinition:
+            identityRestriction:
+              key: identityRestriction
+            name: name
+            description: description
+            restrictionSelectors:
+            - null
+            - null
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+          matchAllSelectorDefinition:
+            name: name
+            description: description
+            actions:
+            - activity: activity
+              scope: scope
+              entity: entity
+            - activity: activity
+              scope: scope
+              entity: entity
+      properties:
+        selectors:
+          items:
+            $ref: '#/components/schemas/SelectorDefinition'
+          type: array
+      required:
+      - selectors
       type: object
     IfIdentityClaimExpression:
       additionalProperties: false
@@ -5824,8 +6132,10 @@ components:
         value: value
       properties:
         claimType:
+          minLength: 1
           type: string
         claimValueType:
+          minLength: 1
           type: string
         claimIssuer:
           nullable: true
@@ -5850,6 +6160,7 @@ components:
       properties:
         scopeName:
           minLength: 1
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
       required:
       - scopeName
@@ -5915,6 +6226,7 @@ components:
       additionalProperties: false
       properties:
         name:
+          minLength: 1
           type: string
         errorDetails:
           items:
@@ -5942,13 +6254,6 @@ components:
         instance:
           nullable: true
           type: string
-        extensions:
-          additionalProperties:
-            additionalProperties: false
-            type: object
-          nullable: true
-          readOnly: true
-          type: object
       required:
       - code
       - name
@@ -5957,6 +6262,7 @@ components:
       additionalProperties: false
       properties:
         name:
+          minLength: 1
           type: string
         errorDetails:
           items:
@@ -5991,13 +6297,6 @@ components:
         instance:
           nullable: true
           type: string
-        extensions:
-          additionalProperties:
-            additionalProperties: false
-            type: object
-          nullable: true
-          readOnly: true
-          type: object
       required:
       - code
       - name
@@ -6018,7 +6317,7 @@ components:
         actions:
           items:
             $ref: '#/components/schemas/ActionId'
-          minLength: 1
+          minItems: 1
           type: array
         name:
           maxLength: 100
@@ -6072,12 +6371,12 @@ components:
         expressions:
           items:
             $ref: '#/components/schemas/MetadataExpression'
-          minLength: 1
+          minItems: 1
           type: array
         actions:
           items:
             $ref: '#/components/schemas/ActionId'
-          minLength: 1
+          minItems: 1
           type: array
         name:
           maxLength: 100
@@ -6105,7 +6404,7 @@ components:
             additionalProperties:
               type: string
             type: object
-          minLength: 1
+          minItems: 1
           type: array
       required:
       - roles
@@ -6172,6 +6471,7 @@ components:
           additionalProperties:
             items:
               $ref: '#/components/schemas/EntitlementMetadata'
+            nullable: true
             type: array
           description: Any relevant metadata associated with this resource for controlling
             access to this resource
@@ -6202,10 +6502,12 @@ components:
           maxLength: 100
           minLength: 3
           nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         code:
           maxLength: 100
           minLength: 3
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
       required:
       - code
@@ -6294,6 +6596,7 @@ components:
           additionalProperties:
             items:
               $ref: '#/components/schemas/EntitlementMetadata'
+            nullable: true
             type: array
           description: Any relevant metadata associated with this resource for controlling
             access to this resource
@@ -6462,7 +6765,113 @@ components:
               scope: scope
               entity: entity
         if:
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -6473,7 +6882,113 @@ components:
             claimOriginalIssuer: claimOriginalIssuer
             claimIssuer: claimIssuer
             value: value
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -6549,10 +7064,12 @@ components:
           maxLength: 100
           minLength: 3
           nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         code:
           maxLength: 100
           minLength: 3
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
       required:
       - code
@@ -6743,7 +7260,113 @@ components:
               scope: scope
               entity: entity
         if:
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -6754,7 +7377,113 @@ components:
             claimOriginalIssuer: claimOriginalIssuer
             claimIssuer: claimIssuer
             value: value
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -6845,7 +7574,7 @@ components:
         actions:
           items:
             $ref: '#/components/schemas/ActionId'
-          minLength: 1
+          minItems: 1
           type: array
         name:
           maxLength: 100
@@ -7015,7 +7744,113 @@ components:
               scope: scope
               entity: entity
         if:
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -7026,7 +7861,113 @@ components:
             claimOriginalIssuer: claimOriginalIssuer
             claimIssuer: claimIssuer
             value: value
-        - ifIdentityScopeExpression:
+        - ifFeatureChainExpression:
+            selectors:
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+            - metadataSelectorDefinition:
+                name: name
+                description: description
+                expressions:
+                - metadataKey: metadataKey
+                  textValue: textValue
+                - metadataKey: metadataKey
+                  textValue: textValue
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              idSelectorDefinition:
+                identifier:
+                  key: identifier
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              policySelectorDefinition:
+                identityRestriction:
+                  key: identityRestriction
+                name: name
+                description: description
+                restrictionSelectors:
+                - null
+                - null
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+              matchAllSelectorDefinition:
+                name: name
+                description: description
+                actions:
+                - activity: activity
+                  scope: scope
+                  entity: entity
+                - activity: activity
+                  scope: scope
+                  entity: entity
+          ifIdentityScopeExpression:
             scopeName: scopeName
           ifRequestHeaderExpression:
             headerName: headerName
@@ -7179,11 +8120,13 @@ components:
           description: The type of the resource on which the activity would be performed
           maxLength: 100
           minLength: 3
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         scope:
           description: The scope/provider/vendor of the activity
           maxLength: 100
           minLength: 3
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         activity:
           description: The identifier of the action to be performed on the resource
@@ -7218,6 +8161,7 @@ components:
           additionalProperties:
             items:
               $ref: '#/components/schemas/EntitlementMetadata'
+            nullable: true
             type: array
           description: Any metadata associated with the resource being requested
           nullable: true
@@ -7744,7 +8688,113 @@ components:
                 scope: scope
                 entity: entity
           if:
-          - ifIdentityScopeExpression:
+          - ifFeatureChainExpression:
+              selectors:
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+            ifIdentityScopeExpression:
               scopeName: scopeName
             ifRequestHeaderExpression:
               headerName: headerName
@@ -7755,7 +8805,113 @@ components:
               claimOriginalIssuer: claimOriginalIssuer
               claimIssuer: claimIssuer
               value: value
-          - ifIdentityScopeExpression:
+          - ifFeatureChainExpression:
+              selectors:
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+            ifIdentityScopeExpression:
               scopeName: scopeName
             ifRequestHeaderExpression:
               headerName: headerName
@@ -7929,7 +9085,113 @@ components:
                 scope: scope
                 entity: entity
           if:
-          - ifIdentityScopeExpression:
+          - ifFeatureChainExpression:
+              selectors:
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+            ifIdentityScopeExpression:
               scopeName: scopeName
             ifRequestHeaderExpression:
               headerName: headerName
@@ -7940,7 +9202,113 @@ components:
               claimOriginalIssuer: claimOriginalIssuer
               claimIssuer: claimIssuer
               value: value
-          - ifIdentityScopeExpression:
+          - ifFeatureChainExpression:
+              selectors:
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+              - metadataSelectorDefinition:
+                  name: name
+                  description: description
+                  expressions:
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  - metadataKey: metadataKey
+                    textValue: textValue
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                idSelectorDefinition:
+                  identifier:
+                    key: identifier
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                policySelectorDefinition:
+                  identityRestriction:
+                    key: identityRestriction
+                  name: name
+                  description: description
+                  restrictionSelectors:
+                  - null
+                  - null
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                matchAllSelectorDefinition:
+                  name: name
+                  description: description
+                  actions:
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+                  - activity: activity
+                    scope: scope
+                    entity: entity
+            ifIdentityScopeExpression:
               scopeName: scopeName
             ifRequestHeaderExpression:
               headerName: headerName
@@ -8113,6 +9481,7 @@ components:
       properties:
         code:
           description: The code of the role
+          minLength: 1
           pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         description:
@@ -8140,10 +9509,12 @@ components:
           maxLength: 100
           minLength: 3
           nullable: true
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         code:
           maxLength: 100
           minLength: 3
+          pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
       required:
       - code
@@ -8230,6 +9601,7 @@ components:
           $ref: '#/components/schemas/WhenSpec'
         permission:
           description: The action key of the role
+          minLength: 1
           type: string
         limit:
           additionalProperties:
@@ -8384,6 +9756,7 @@ components:
       properties:
         userId:
           description: The Id of the user for whom to create the role.
+          minLength: 1
           pattern: ^(?=.*[a-zA-Z])[\w][\w +-]{2,100}$
           type: string
         resource:

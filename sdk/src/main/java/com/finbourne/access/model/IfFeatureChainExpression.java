@@ -15,7 +15,7 @@ package com.finbourne.access.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.finbourne.access.model.PolicyId;
+import com.finbourne.access.model.SelectorDefinition;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -28,38 +28,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Request body used to add Policies to a Role
+ * IfFeatureChainExpression
  */
-@ApiModel(description = "Request body used to add Policies to a Role")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AddPolicyToRoleRequest {
-  public static final String SERIALIZED_NAME_POLICIES = "policies";
-  @SerializedName(SERIALIZED_NAME_POLICIES)
-  private List<PolicyId> policies = new ArrayList<>();
+public class IfFeatureChainExpression {
+  public static final String SERIALIZED_NAME_SELECTORS = "selectors";
+  @SerializedName(SERIALIZED_NAME_SELECTORS)
+  private List<SelectorDefinition> selectors = new ArrayList<>();
 
 
-  public AddPolicyToRoleRequest policies(List<PolicyId> policies) {
-    this.policies = policies; 
+  public IfFeatureChainExpression selectors(List<SelectorDefinition> selectors) {
+    this.selectors = selectors; 
     return this;
   }
 
-  public AddPolicyToRoleRequest addPoliciesItem(PolicyId policiesItem) {
+  public IfFeatureChainExpression addSelectorsItem(SelectorDefinition selectorsItem) {
    
-    this.policies.add(policiesItem);
+    this.selectors.add(selectorsItem);
     return this;
   }
 
    /**
-   * Identifiers of policies to add to a role
-   * @return policies
+   * Get selectors
+   * @return selectors
   **/
-  @ApiModelProperty(required = true, value = "Identifiers of policies to add to a role")
-  public List<PolicyId> getPolicies() {
-    return policies;
+  @ApiModelProperty(required = true, value = "")
+  public List<SelectorDefinition> getSelectors() {
+    return selectors;
   }
 
-  public void setPolicies(List<PolicyId> policies) {
-    this.policies = policies;
+  public void setSelectors(List<SelectorDefinition> selectors) {
+    this.selectors = selectors;
   }
 
 
@@ -82,8 +81,8 @@ public class AddPolicyToRoleRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AddPolicyToRoleRequest {\n");
-    sb.append("    policies: ").append(toIndentedString(policies)).append("\n");
+    sb.append("class IfFeatureChainExpression {\n");
+    sb.append("    selectors: ").append(toIndentedString(selectors)).append("\n");
     sb.append("}");
     return sb.toString();
   }

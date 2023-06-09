@@ -299,7 +299,7 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Success |  -  |
+**204** | No Content |  -  |
 **400** | The details of the input related failure |  -  |
 **0** | Error response |  -  |
 
@@ -369,7 +369,7 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Success |  -  |
+**204** | No Content |  -  |
 **400** | The details of the input related failure |  -  |
 **0** | Error response |  -  |
 
@@ -677,7 +677,7 @@ Name | Type | Description  | Notes
 
 [EARLY ACCESS] ListPolicies: List Policies
 
-Gets all Policies in a scope
+Gets all Policies in a scope. For pagination support, use PagePolicies.
 
 ### Example
 ```java
@@ -756,7 +756,7 @@ Name | Type | Description  | Notes
 
 [EARLY ACCESS] ListPolicyCollections: List PolicyCollections
 
-Gets all PolicyCollections in a scope
+Gets all PolicyCollections in a scope. For pagination support, use PagePolicyCollections
 
 ### Example
 ```java
@@ -835,7 +835,7 @@ Name | Type | Description  | Notes
 
 [EARLY ACCESS] PagePolicies: Page Policies
 
-Gets all PolicyCollections in a scope in pages. Under development.
+Gets all Policies with pagination support.
 
 ### Example
 ```java
@@ -912,7 +912,7 @@ Name | Type | Description  | Notes
 
 [EARLY ACCESS] PagePolicyCollections: Page PolicyCollections
 
-Gets all PolicyCollections in a scope in pages. Under development.
+Gets all PolicyCollections with pagination support.
 
 ### Example
 ```java
